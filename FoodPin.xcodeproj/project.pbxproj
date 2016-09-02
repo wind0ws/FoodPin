@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		424741961D79702F006E30C3 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424741951D79702F006E30C3 /* RestaurantDetailViewController.swift */; };
 		42EC91231D78109800D72960 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EC91221D78109800D72960 /* AppDelegate.swift */; };
 		42EC91281D78109800D72960 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42EC91261D78109800D72960 /* Main.storyboard */; };
 		42EC912A1D78109800D72960 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42EC91291D78109800D72960 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		424741951D79702F006E30C3 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
 		42EC911F1D78109800D72960 /* FoodPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42EC91221D78109800D72960 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42EC91271D78109800D72960 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				42EC912E1D78109800D72960 /* Info.plist */,
 				42EC91341D78125300D72960 /* RestaurantTableViewController.swift */,
 				42EC91361D7823BD00D72960 /* RestaurantTableViewCell.swift */,
+				424741951D79702F006E30C3 /* RestaurantDetailViewController.swift */,
 			);
 			path = FoodPin;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			files = (
 				42EC91351D78125300D72960 /* RestaurantTableViewController.swift in Sources */,
 				42EC91371D7823BD00D72960 /* RestaurantTableViewCell.swift in Sources */,
+				424741961D79702F006E30C3 /* RestaurantDetailViewController.swift in Sources */,
 				42EC91231D78109800D72960 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +296,7 @@
 				42EC91331D78109800D72960 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -73,6 +73,7 @@ class RestaurantTableViewController: UITableViewController {
         return cell
     }
     
+    /*
     //选中某行后执行效果
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let restaurantName = restaurants[indexPath.row]
@@ -110,12 +111,12 @@ class RestaurantTableViewController: UITableViewController {
         alert.addAction(dialAction)
         alert.addAction(alreadyComeAction)
         self.presentViewController(alert, animated: true, completion: nil)
-    }
+    }*/
     
     //隐藏显示状态栏
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
+//    override func prefersStatusBarHidden() -> Bool {
+//        return true
+//    }
     
 
     /*
@@ -126,17 +127,64 @@ class RestaurantTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        let rowIndex = indexPath.row
+        let restaurantName = restaurants[rowIndex]
         if editingStyle == .Delete {
+            restaurants.removeAtIndex(rowIndex)
+            restaurantTypes.removeAtIndex(rowIndex)
+            restaurantPictures.removeAtIndex(rowIndex)
+            restaurantLocations.removeAtIndex(rowIndex)
+            alreadyComeRestaurantsSet.remove(restaurantName)
+            //刷新数据：会刷新全部。下面的deleteRowsAtIndexPaths 能带删除动画
+//            tableView.reloadData()
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
+    //一旦重写实现这个方法，系统将不会提供默认的左滑删除的功能
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let shareRowAction = UITableViewRowAction(style: .Default, title: "分享"){
+            (rowAction,indexPath) -> Void in
+            let shareAlert = UIAlertController(title: "分享菜单", message: "分享到", preferredStyle: .ActionSheet)
+            let sinaWeiBoAlertAction = UIAlertAction(title: "新浪微博", style: .Default,handler: nil)
+            let weChatAlertAction = UIAlertAction(title: "微信", style: .Default, handler: nil)
+            let qqAlertAction = UIAlertAction(title: "QQ", style: .Default, handler: nil)
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            shareAlert.addAction(sinaWeiBoAlertAction)
+            shareAlert.addAction(weChatAlertAction)
+            shareAlert.addAction(qqAlertAction)
+            shareAlert.addAction(cancelAction)
+            self.presentViewController(shareAlert, animated: true, completion: nil)
+        }
+//        shareRowAction.backgroundColor = UIColor.greenColor()
+        shareRowAction.backgroundColor = UIColor(red: 0, green: 171/255, blue: 97/255, alpha: 1)
+        
+        let deleteAction = UITableViewRowAction(style: .Default, title: "删除"){
+            [unowned self] (rowAction,indexPath) -> Void in
+            let rowIndex = indexPath.row
+            let restaurantName = self.restaurants[rowIndex]
+            self.restaurants.removeAtIndex(rowIndex)
+            self.restaurantTypes.removeAtIndex(rowIndex)
+            self.restaurantPictures.removeAtIndex(rowIndex)
+            self.restaurantLocations.removeAtIndex(rowIndex)
+            self.alreadyComeRestaurantsSet.remove(restaurantName)
+            //刷新数据：会刷新全部。下面的deleteRowsAtIndexPaths 能带删除动画
+            //            tableView.reloadData()
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
+//        var actions = [UITableViewRowAction]()
+//        actions.append(shareRowAction)
+//        return actions
+        return [shareRowAction,deleteAction] //这个相当于创建一个新数组，数组包含一个默认元素
+    }
+ 
 
     /*
     // Override to support rearranging the table view.
@@ -153,14 +201,21 @@ class RestaurantTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "showRestaurantDetail"{
+            let destVC = segue.destinationViewController as! RestaurantDetailViewController
+            destVC.restaurantName = restaurants[(tableView.indexPathForSelectedRow?.row)!]
+            destVC.restaurantImage = restaurantPictures[(tableView.indexPathForSelectedRow?.row)!]
+        }
     }
-    */
+ 
+    
+
 
 }
