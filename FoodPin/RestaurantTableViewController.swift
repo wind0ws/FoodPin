@@ -11,28 +11,27 @@ import UIKit
 class RestaurantTableViewController: UITableViewController {
     
     var restaurants = [
-        Restaurant(name: "咖啡胡同", type: "咖啡 & 茶店", location: "香港", image: "cafedeadend.jpg", isVisited: false) ,
-        Restaurant(name: "霍米", type: "咖啡", location: "香港", image: "homei.jpg", isVisited: false) ,
-        Restaurant(name: "茶.家", type: "茶屋", location: "香港", image: "teakha.jpg", isVisited: false) ,
-        Restaurant(name: "洛伊斯咖啡", type: "奥地利式 & 休闲饮料", location: "香港", image: "cafeloisl.jpg", isVisited: false) ,
-        Restaurant(name: "贝蒂生蚝", type: "法式", location: "香港", image: "petiteoyster.jpg", isVisited: false) ,
-        Restaurant(name: "福奇餐馆", type: "面包房", location: "香港", image: "forkeerestaurant.jpg", isVisited: false) ,
-        Restaurant(name: "阿波画室", type: "面包房", location: "香港", image: "posatelier.jpg", isVisited: false) ,
-        Restaurant(name: "伯克街面包坊", type: "巧克力", location: "悉尼", image: "bourkestreetbakery.jpg", isVisited: false) ,
-        Restaurant(name: "黑氏巧克力", type: "咖啡", location: "悉尼", image: "haighschocolate.jpg", isVisited: false) ,
-        Restaurant(name: "惠灵顿雪梨", type: "美式 & 海鲜", location: "悉尼", image: "palominoespresso.jpg", isVisited: false) ,
-        Restaurant(name: "北州", type: "美式", location: "纽约", image: "upstate.jpg", isVisited: false) ,
-        Restaurant(name: "布鲁克林塔菲", type: "美式", location: "纽约", image: "traif.jpg", isVisited: false) ,
-        Restaurant(name: "格雷厄姆大街肉", type: "早餐 & 早午餐", location: "纽约", image: "grahamavenuemeats.jpg", isVisited: false) ,
-        Restaurant(name: "华夫饼 & 沃夫", type: "法式 & 茶", location: "纽约", image: "wafflewolf.jpg", isVisited: false) ,
-        Restaurant(name: "五叶", type: "咖啡 & 茶", location: "纽约", image: "fiveleaves.jpg", isVisited: false) ,
-        Restaurant(name: "眼光咖啡", type: "拉丁美式", location: "纽约", image: "cafelore.jpg", isVisited: false) ,
-        Restaurant(name: "忏悔", type: "西班牙式", location: "纽约", image: "confessional.jpg", isVisited: false) ,
-        Restaurant(name: "巴拉菲娜", type: "西班牙式", location: "伦敦", image: "barrafina.jpg", isVisited: false) ,
-        Restaurant(name: "多尼西亚", type: "西班牙式", location: "伦敦", image: "donostia.jpg", isVisited: false) ,
-        Restaurant(name: "皇家橡树", type: "英式", location: "伦敦", image: "royaloak.jpg", isVisited: false) ,
-        Restaurant(name: "泰咖啡", type: "泰式", location: "伦敦", image: "thaicafe.jpg", isVisited: false)
-
+        Restaurant(name: "咖啡胡同", type: "咖啡 & 茶店", location: "香港上环德辅道西78号G/F", image: "cafedeadend.jpg", isVisited: false) ,
+        Restaurant(name: "霍米", type: "咖啡", location: "香港上环文咸东街太平山22-24A，B店", image: "homei.jpg", isVisited: false) ,
+        Restaurant(name: "茶.家", type: "茶屋", location: "香港葵涌和宜合道熟食市场地下", image: "teakha.jpg", isVisited: false) ,
+        Restaurant(name: "洛伊斯咖啡", type: "奥地利式 & 休闲饮料", location: "香港新界葵涌屏富径", image: "cafeloisl.jpg", isVisited: false) ,
+        Restaurant(name: "贝蒂生蚝", type: "法式", location: "香港九龙尖沙咀河内道18号(近港铁尖东站N3,N4出口) ", image: "petiteoyster.jpg", isVisited: false) ,
+        Restaurant(name: "福奇餐馆", type: "面包房", location: "香港岛中环都爹利街13号乐成行地库中层", image: "forkeerestaurant.jpg", isVisited: false) ,
+        Restaurant(name: "阿波画室", type: "面包房", location: "香港岛铜锣湾轩尼诗道555号崇光百货地库2楼30号铺", image: "posatelier.jpg", isVisited: false) ,
+        Restaurant(name: "伯克街面包坊", type: "巧克力", location: "4 Hickson Rd、The Rocks NSW 2000", image: "bourkestreetbakery.jpg", isVisited: false) ,
+        Restaurant(name: "黑氏巧克力", type: "咖啡", location: "31 Wheat Rd、Sydney NSW 2001", image: "haighschocolate.jpg", isVisited: false) ,
+        Restaurant(name: "惠灵顿雪梨", type: "美式 & 海鲜", location: "1/11-31 York Street Sydney NSW Australia、Sydney NSW 2000", image: "palominoespresso.jpg", isVisited: false) ,
+        Restaurant(name: "北州", type: "美式", location: "Macy's、151 W 34th St Fifth Floor、New York, NY 10001", image: "upstate.jpg", isVisited: false) ,
+        Restaurant(name: "布鲁克林塔菲", type: "美式", location: "250 8th Ave、New York, NY 10107", image: "traif.jpg", isVisited: false) ,
+        Restaurant(name: "格雷厄姆大街肉", type: "早餐 & 早午餐", location: "55-1 Riverwalk Pl、West New York, NJ 07093", image: "grahamavenuemeats.jpg", isVisited: false) ,
+        Restaurant(name: "华夫饼 & 沃夫", type: "法式 & 茶", location: "1585 Broadway、New York, NY 10036-8200", image: "wafflewolf.jpg", isVisited: false) ,
+        Restaurant(name: "五叶", type: "咖啡 & 茶", location: "1460 Broadway、New York, NY 10036", image: "fiveleaves.jpg", isVisited: false) ,
+        Restaurant(name: "眼光咖啡", type: "拉丁美式", location: "250 8th Ave、New York, NY 10107", image: "cafelore.jpg", isVisited: false) ,
+        Restaurant(name: "忏悔", type: "西班牙式", location: "822 Lexington Ave、New York, NY 10065", image: "confessional.jpg", isVisited: false) ,
+        Restaurant(name: "巴拉菲娜", type: "西班牙式", location: "Unit 2, Eldon Chambers、30-32 Fleet St、London EC4Y 1AA", image: "barrafina.jpg", isVisited: false) ,
+        Restaurant(name: "多尼西亚", type: "西班牙式", location: "Waterloo Station、London SE1 7LY", image: "donostia.jpg", isVisited: false) ,
+        Restaurant(name: "皇家橡树", type: "英式", location: "Unit 4a、44-58 Brompton Rd、London SW3 1BW", image: "royaloak.jpg", isVisited: false) ,
+        Restaurant(name: "泰咖啡", type: "泰式", location: "7-9 Golders Green Rd、London NW11 8DY", image: "thaicafe.jpg", isVisited: false)
     ]
     
     
@@ -44,6 +43,9 @@ class RestaurantTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        //启用行高自适应。记得将需要自适应高度的Label的lines设为0哦
+        tableView.estimatedRowHeight = 80
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -226,8 +228,12 @@ class RestaurantTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "showRestaurantDetail"{
-            let destVC = segue.destinationViewController as! RestaurantDetailViewController
+//        if segue.identifier == "showRestaurantDetail"{
+//            let destVC = segue.destinationViewController as! RestaurantDetailViewController
+//            destVC.restaurant = restaurants[(tableView.indexPathForSelectedRow?.row)!]
+//        }
+        if segue.identifier == "showRestaurantDetail" {
+            let destVC = segue.destinationViewController as! RestaurantDetailTableViewController
             destVC.restaurant = restaurants[(tableView.indexPathForSelectedRow?.row)!]
         }
     }
