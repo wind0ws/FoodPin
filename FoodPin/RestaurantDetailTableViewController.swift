@@ -11,6 +11,7 @@ import UIKit
 class RestaurantDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var evaluateButton: UIButton!
     
     func getDetailItemValues(restaurant:Restaurant) -> [(String,String)] {
         var result = [(String,String)]()
@@ -139,7 +140,15 @@ class RestaurantDetailTableViewController: UITableViewController {
     }
     
     @IBAction func closeSegue(segue:UIStoryboardSegue){
-        //返回时的操作，可以为空
+        //反向转场 unwind 传值
+        if segue.identifier == "unwindToDetailView" {
+            let sourceVC = segue.sourceViewController as! RestaurantEvaluateViewController
+            if let evaluate = sourceVC.evaluate {
+                print("你的评价是：\(evaluate)")
+                self.restaurant.evaluate = evaluate
+                self.evaluateButton.setImage(UIImage(named: evaluate), forState: .Normal)
+            }
+        }
     }
     
 

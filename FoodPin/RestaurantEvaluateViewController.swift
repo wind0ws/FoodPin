@@ -11,7 +11,7 @@ import UIKit
 class RestaurantEvaluateViewController: UIViewController {
 
     var imageName:String?
-    
+    var evaluate:String?
     
     @IBOutlet weak var evaluateStackView: UIStackView!
     @IBOutlet weak var imageView: UIImageView!
@@ -58,6 +58,22 @@ class RestaurantEvaluateViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func evaluateBtnTapped(sender: UIButton) {
+        let tag = sender.tag
+        switch tag {
+        case 100:
+            evaluate = "dislike"
+        case 200:
+            evaluate = "good"
+        case 300:
+            evaluate = "great"
+        default:
+            break
+        }
+        performSegueWithIdentifier("unwindToDetailView", sender: sender)
+    }
+    
     
 
     /*
