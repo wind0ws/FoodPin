@@ -214,7 +214,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F9K-ad-In3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Yfk-zb-jcg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2500" y="807"/>
+            <point key="canvasLocation" x="2542" y="386"/>
         </scene>
         <!--Restaurant Detail View Controller-->
         <scene sceneID="asV-za-O66">
@@ -261,16 +261,16 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kRK-RO-X5u">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                    <rect key="frame" x="0.0" y="-3" width="600" height="407"/>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0P6-Jf-hS7">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0P6-Jf-hS7">
                                     <rect key="frame" x="530" y="20" width="50" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="WKt-Sf-t7Q"/>
                                         <constraint firstAttribute="height" constant="50" id="rRa-1d-RHU"/>
                                     </constraints>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <state key="normal" backgroundImage="rating"/>
+                                    <state key="normal" image="rating"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                             <integer key="value" value="20"/>
@@ -280,11 +280,30 @@
                                         <segue destination="fRl-Ff-WeB" kind="presentation" identifier="evaluateRestaurant" id="MlC-X8-rps"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jw5-eh-fk4">
+                                    <rect key="frame" x="530" y="86" width="50" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="RH1-QW-rTb"/>
+                                        <constraint firstAttribute="height" constant="50" id="ef3-gl-9qB"/>
+                                    </constraints>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" image="map"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="20"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <segue destination="NTA-EW-vMh" kind="show" identifier="showMap" id="PWK-1k-iva"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="0P6-Jf-hS7" firstAttribute="top" secondItem="j4e-U4-XYC" secondAttribute="top" constant="20" id="0Yi-nm-TIV"/>
+                                <constraint firstItem="Jw5-eh-fk4" firstAttribute="top" secondItem="0P6-Jf-hS7" secondAttribute="bottom" constant="16" id="15p-sG-eoq"/>
                                 <constraint firstAttribute="trailing" secondItem="0P6-Jf-hS7" secondAttribute="trailing" constant="20" id="bj1-If-0Jr"/>
+                                <constraint firstItem="Jw5-eh-fk4" firstAttribute="leading" secondItem="0P6-Jf-hS7" secondAttribute="leading" id="nZh-8t-ImB"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -361,6 +380,38 @@
             </objects>
             <point key="canvasLocation" x="1814" y="807"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="qub-Iv-Zh1">
+            <objects>
+                <viewController id="NTA-EW-vMh" customClass="MapViewController" customModule="FoodPin" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NWp-Sr-q5l"/>
+                        <viewControllerLayoutGuide type="bottom" id="qXh-u6-lQN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2JO-am-ayp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ofn-yI-MEZ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ofn-yI-MEZ" secondAttribute="trailing" id="5kh-8J-9QX"/>
+                            <constraint firstItem="Ofn-yI-MEZ" firstAttribute="top" secondItem="2JO-am-ayp" secondAttribute="top" id="MHb-Ta-kHj"/>
+                            <constraint firstItem="Ofn-yI-MEZ" firstAttribute="leading" secondItem="2JO-am-ayp" secondAttribute="leading" id="VLq-OC-e3v"/>
+                            <constraint firstItem="Ofn-yI-MEZ" firstAttribute="bottom" secondItem="qXh-u6-lQN" secondAttribute="top" id="VZC-oM-lhJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="Ofn-yI-MEZ" id="apo-LN-pWg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JCW-Bt-ECh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2542" y="1059"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="f7s-qs-swV">
             <objects>
@@ -386,6 +437,7 @@
         <image name="good" width="256" height="256"/>
         <image name="great" width="256" height="256"/>
         <image name="heart" width="64" height="64"/>
+        <image name="map" width="48" height="48"/>
         <image name="rating" width="256" height="256"/>
     </resources>
 </document>

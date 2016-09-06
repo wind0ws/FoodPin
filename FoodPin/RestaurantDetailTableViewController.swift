@@ -134,7 +134,10 @@ class RestaurantDetailTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "evaluateRestaurant" {
             let vc = segue.destinationViewController as! RestaurantEvaluateViewController
-           vc.imageName = restaurant.image
+            vc.imageName = restaurant.image
+        }else if segue.identifier == "showMap" {
+            let vc = segue.destinationViewController as! MapViewController
+            vc.restaurant = restaurant
         }
         
     }
