@@ -67,6 +67,19 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.boolForKey("isGuiderShowed"){
+            print("引导页已经显示过啦")
+            return
+        }
+        if let guiderContentViewController = storyboard?.instantiateViewControllerWithIdentifier("GuiderPageController") as? GuiderPageViewController{
+            //模态展示引导页。  
+            self.presentViewController(guiderContentViewController, animated: true, completion: nil)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
