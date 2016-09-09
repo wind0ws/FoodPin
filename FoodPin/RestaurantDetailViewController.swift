@@ -21,7 +21,7 @@ class RestaurantDetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         if let restaurant = restaurant{
-            restaurantImageView.image = UIImage(named: restaurant.image)
+            restaurantImageView.image = UIImage(data: restaurant.image!)
         }
         
     }

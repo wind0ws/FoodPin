@@ -10,7 +10,8 @@ import UIKit
 
 class RestaurantEvaluateViewController: UIViewController {
 
-    var imageName:String?
+    var restaurant:Restaurant!
+    
     var evaluate:String?
     
     @IBOutlet weak var evaluateStackView: UIStackView!
@@ -25,9 +26,7 @@ class RestaurantEvaluateViewController: UIViewController {
         
         //加载图片
         imageView.addSubview(blurEffectView)
-        if let imageName = imageName {
-            imageView.image = UIImage(named: imageName)
-        }
+        imageView.image = UIImage(data: restaurant.image!)
         
         //设置评价StackView变形属性
         let scale = CGAffineTransformMakeScale(0, 0)

@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import CoreData
 
 class AddRestaurantTableViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
+    var restaurant:Restaurant?
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var restaurantName: UITextField!
     @IBOutlet weak var restaurantType: UITextField!
     @IBOutlet weak var restaurantAddress: UITextField!
-    @IBOutlet weak var isComeSwitch: UISwitch!
+    @IBOutlet weak var isVisitedSwitch: UISwitch!
     
     
     override func viewDidLoad() {
@@ -47,8 +50,85 @@ class AddRestaurantTableViewController: UITableViewController,UIImagePickerContr
         rightConstraint.active = true
         topConstraint.active = true
         bottomConstraint.active = true
+    }
+    
+    @IBAction func saveBtnTapped(sender: AnyObject) {
+        //获取管理托管对象缓冲区上下文.
+        let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+        restaurant = NSEntityDescription.insertNewObjectForEntityForName("Restaurant", inManagedObjectContext: buffer!) as? Restaurant
+        restaurant?.name = restaurantName.text!
+        restaurant?.type = restaurantType.text!
+        restaurant?.location = restaurantAddress.text!
+        if let image = imageView.image{
+            restaurant?.image = UIImagePNGRepresentation(image)
+        }
+        restaurant?.isVisited = isVisitedSwitch.on //NSNumber 类型与数字和布尔类型自动转换。
+        do{
+            try buffer?.save()
+        }catch {
+            print(error)
+            return
+        }
+        /*
+         关于 do try catch
+         
+         do {
+            try expression
+            statements
+         } catch pattern 1 {
+            statements
+         } catch pattern 2 where condition {
+            statements
+         }
+         
+         do {
+            try d.writeToFile("Hello", options: [])
+         } catch let error as NSError {
+            print ("Error: \(error.domain)")
+         }
+         
+         do {
+            try login("onevcat", password: "123")
+         } catch LoginError.UserNotFound {
+            print("UserNotFound")
+         } catch LoginError.UserPasswordNotMatch {
+            print("UserPasswordNotMatch")
+         }
+         
+         let y: Int?
+         do {
+            y = try someThrowingFunction()
+         } catch {
+            y = nil
+            print(error)
+         }
+         
+         
+         //try?不处理异常。出现异常返回nil
+         func fetchData() -> Data? {
+            if let data = try? fetchDataFromDisk() { return data }
+            if let data = try? fetchDataFromServer() { return data }
+            return nil
+         }
+         
+         if let num = try? methodThrowsWhenPassingNegative(100) {
+            print(num.dynamicType)
+         } else {
+            print("failed")
+         }
+
+         
+         //try!不处理异常。如果异常发生了会crash
+         let photo = try! loadImage("./Resources/John Appleseed.jpg")
+
+ 
+        */
+        
+        performSegueWithIdentifier("unwindToHomeList", sender: sender)
         
     }
+    
+    
 
     // MARK: - Table view data source
 //静态生成的  无需下面的方法

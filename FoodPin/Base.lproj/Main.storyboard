@@ -24,10 +24,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q3e-vD-Ivg">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q3e-vD-Ivg">
                                             <rect key="frame" x="15" y="10" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="3Sz-Pv-zt9"/>
+                                                <constraint firstAttribute="height" constant="60" id="fFL-Ly-cOK"/>
+                                            </constraints>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YS3-xJ-qnm">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kUu-7g-GgE">
                                             <rect key="frame" x="88" y="8" width="504" height="63"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="餐馆名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94L-aX-gkL">
@@ -36,15 +40,15 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="地点" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xw2-U8-7wR">
-                                                    <rect key="frame" x="0.0" y="33" width="504" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymW-sI-dK2">
+                                                    <rect key="frame" x="0.0" y="33" width="504" height="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymW-sI-dK2">
-                                                    <rect key="frame" x="0.0" y="49" width="504" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="地点" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xw2-U8-7wR">
+                                                    <rect key="frame" x="0.0" y="47" width="504" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -65,12 +69,14 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Xfr-pK-CHF" secondAttribute="trailing" constant="32" id="8IS-Z7-1Lp"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="YS3-xJ-qnm" secondAttribute="bottom" id="OL0-Qq-A5L"/>
-                                        <constraint firstItem="Xfr-pK-CHF" firstAttribute="centerY" secondItem="c2O-I1-Lhf" secondAttribute="centerY" id="UQM-q2-HfI"/>
-                                        <constraint firstItem="YS3-xJ-qnm" firstAttribute="top" secondItem="c2O-I1-Lhf" secondAttribute="topMargin" id="daf-gQ-8DF"/>
-                                        <constraint firstItem="YS3-xJ-qnm" firstAttribute="leading" secondItem="c2O-I1-Lhf" secondAttribute="leadingMargin" constant="80" id="h3T-NN-R1h"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="YS3-xJ-qnm" secondAttribute="trailing" id="irQ-Gu-X8N"/>
+                                        <constraint firstItem="kUu-7g-GgE" firstAttribute="leading" secondItem="c2O-I1-Lhf" secondAttribute="leadingMargin" constant="80" id="0xZ-vg-3wt"/>
+                                        <constraint firstItem="Xfr-pK-CHF" firstAttribute="centerY" secondItem="c2O-I1-Lhf" secondAttribute="centerY" id="Dbh-Kc-59m"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Xfr-pK-CHF" secondAttribute="trailing" constant="32" id="bZY-lq-AWV"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="kUu-7g-GgE" secondAttribute="trailing" id="iJ3-0e-uDc"/>
+                                        <constraint firstItem="q3e-vD-Ivg" firstAttribute="centerY" secondItem="c2O-I1-Lhf" secondAttribute="centerY" id="py8-IU-ZlG"/>
+                                        <constraint firstItem="q3e-vD-Ivg" firstAttribute="leading" secondItem="c2O-I1-Lhf" secondAttribute="leadingMargin" constant="7" id="ucf-mG-e0A"/>
+                                        <constraint firstAttribute="topMargin" secondItem="kUu-7g-GgE" secondAttribute="top" id="urv-JI-OwA"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="kUu-7g-GgE" secondAttribute="bottom" id="xxq-ky-xb9"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -539,14 +545,18 @@
                     <navigationItem key="navigationItem" title="新店" id="Vor-pe-DdH">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="762-mF-HP9">
                             <connections>
-                                <segue destination="B2M-ae-Srq" kind="unwind" unwindAction="unwindToHomeScreen:" id="Kdd-1B-55X"/>
+                                <segue destination="B2M-ae-Srq" kind="unwind" identifier="unwindToHomeList" unwindAction="unwindToHomeScreen:" id="jvU-DV-wJ3"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ySh-Jr-Ert"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ySh-Jr-Ert">
+                            <connections>
+                                <action selector="saveBtnTapped:" destination="I14-cW-qfS" id="wxN-uC-OnE"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="cfQ-CE-DaW" id="4A7-EH-K71"/>
-                        <outlet property="isComeSwitch" destination="VJq-LM-V0o" id="Qrw-CI-sbJ"/>
+                        <outlet property="isVisitedSwitch" destination="VJq-LM-V0o" id="72j-Yc-s89"/>
                         <outlet property="restaurantAddress" destination="3Eu-Sz-mzI" id="JrB-xV-yN5"/>
                         <outlet property="restaurantName" destination="cZB-bs-Tvr" id="Qb8-eC-uJz"/>
                         <outlet property="restaurantType" destination="XYL-6t-iDZ" id="ZUw-cw-kzW"/>

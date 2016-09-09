@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Restaurant {
+public struct Restaurant1 {
     var name:String
     var type:String
     var location:String

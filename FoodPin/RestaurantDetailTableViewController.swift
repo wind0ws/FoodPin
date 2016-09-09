@@ -18,7 +18,7 @@ class RestaurantDetailTableViewController: UITableViewController {
         result.append(("餐馆名:",restaurant.name))
         result.append(("餐馆类型:",restaurant.type))
         result.append(("地址:",restaurant.location))
-        result.append(("来过:", restaurant.isVisited ? "来过啦" : "尚未来过"))
+        result.append(("来过:", restaurant.isVisited.boolValue ? "来过啦" : "尚未来过"))
         return result
     }
     
@@ -29,7 +29,7 @@ class RestaurantDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         restaurantItems = getDetailItemValues(restaurant)
-        imageView.image = UIImage(named: restaurant.image)
+        imageView.image = UIImage(data: restaurant.image!)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -43,6 +43,12 @@ class RestaurantDetailTableViewController: UITableViewController {
         //2.设置行高自适应
         tableView.rowHeight = UITableViewAutomaticDimension
         //3.对Cell中的控件进行约束，要确保设置了顶距和底距为0
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if let evaluate = restaurant.evaluate{
+            evaluateButton.setImage(UIImage(named: evaluate), forState: .Normal)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -134,7 +140,7 @@ class RestaurantDetailTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "evaluateRestaurant" {
             let vc = segue.destinationViewController as! RestaurantEvaluateViewController
-            vc.imageName = restaurant.image
+            vc.restaurant = restaurant
         }else if segue.identifier == "showMap" {
             let vc = segue.destinationViewController as! MapViewController
             vc.restaurant = restaurant
@@ -147,9 +153,16 @@ class RestaurantDetailTableViewController: UITableViewController {
         if segue.identifier == "unwindToDetailView" {
             let sourceVC = segue.sourceViewController as! RestaurantEvaluateViewController
             if let evaluate = sourceVC.evaluate {
-                print("你的评价是：\(evaluate)")
+                NSLog("你的评价是：\(evaluate)")
                 self.restaurant.evaluate = evaluate
                 self.evaluateButton.setImage(UIImage(named: evaluate), forState: .Normal)
+                //保存评价
+                let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+                do{
+                    try buffer?.save()
+                }catch{
+                    NSLog("\(error)")
+                }
             }
         }
     }

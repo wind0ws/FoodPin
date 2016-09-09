@@ -7,33 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
-class RestaurantTableViewController: UITableViewController {
+class RestaurantTableViewController: UITableViewController,NSFetchedResultsControllerDelegate {
     
-    var restaurants = [
-        Restaurant(name: "咖啡胡同", type: "咖啡 & 茶店", location: "香港上环德辅道西78号G/F", image: "cafedeadend.jpg", isVisited: false) ,
-        Restaurant(name: "霍米", type: "咖啡", location: "香港上环文咸东街太平山22-24A，B店", image: "homei.jpg", isVisited: false) ,
-        Restaurant(name: "茶.家", type: "茶屋", location: "香港葵涌和宜合道熟食市场地下", image: "teakha.jpg", isVisited: false) ,
-        Restaurant(name: "洛伊斯咖啡", type: "奥地利式 & 休闲饮料", location: "香港新界葵涌屏富径", image: "cafeloisl.jpg", isVisited: false) ,
-        Restaurant(name: "贝蒂生蚝", type: "法式", location: "香港九龙尖沙咀河内道18号(近港铁尖东站N3,N4出口) ", image: "petiteoyster.jpg", isVisited: false) ,
-        Restaurant(name: "福奇餐馆", type: "面包房", location: "香港岛中环都爹利街13号乐成行地库中层", image: "forkeerestaurant.jpg", isVisited: false) ,
-        Restaurant(name: "阿波画室", type: "面包房", location: "香港岛铜锣湾轩尼诗道555号崇光百货地库2楼30号铺", image: "posatelier.jpg", isVisited: false) ,
-        Restaurant(name: "伯克街面包坊", type: "巧克力", location: "4 Hickson Rd、The Rocks NSW 2000", image: "bourkestreetbakery.jpg", isVisited: false) ,
-        Restaurant(name: "黑氏巧克力", type: "咖啡", location: "31 Wheat Rd、Sydney NSW 2001", image: "haighschocolate.jpg", isVisited: false) ,
-        Restaurant(name: "惠灵顿雪梨", type: "美式 & 海鲜", location: "1/11-31 York Street Sydney NSW Australia、Sydney NSW 2000", image: "palominoespresso.jpg", isVisited: false) ,
-        Restaurant(name: "北州", type: "美式", location: "Macy's、151 W 34th St Fifth Floor、New York, NY 10001", image: "upstate.jpg", isVisited: false) ,
-        Restaurant(name: "布鲁克林塔菲", type: "美式", location: "250 8th Ave、New York, NY 10107", image: "traif.jpg", isVisited: false) ,
-        Restaurant(name: "格雷厄姆大街肉", type: "早餐 & 早午餐", location: "55-1 Riverwalk Pl、West New York, NJ 07093", image: "grahamavenuemeats.jpg", isVisited: false) ,
-        Restaurant(name: "华夫饼 & 沃夫", type: "法式 & 茶", location: "1585 Broadway、New York, NY 10036-8200", image: "wafflewolf.jpg", isVisited: false) ,
-        Restaurant(name: "五叶", type: "咖啡 & 茶", location: "1460 Broadway、New York, NY 10036", image: "fiveleaves.jpg", isVisited: false) ,
-        Restaurant(name: "眼光咖啡", type: "拉丁美式", location: "250 8th Ave、New York, NY 10107", image: "cafelore.jpg", isVisited: false) ,
-        Restaurant(name: "忏悔", type: "西班牙式", location: "822 Lexington Ave、New York, NY 10065", image: "confessional.jpg", isVisited: false) ,
-        Restaurant(name: "巴拉菲娜", type: "西班牙式", location: "Unit 2, Eldon Chambers、30-32 Fleet St、London EC4Y 1AA", image: "barrafina.jpg", isVisited: false) ,
-        Restaurant(name: "多尼西亚", type: "西班牙式", location: "Waterloo Station、London SE1 7LY", image: "donostia.jpg", isVisited: false) ,
-        Restaurant(name: "皇家橡树", type: "英式", location: "Unit 4a、44-58 Brompton Rd、London SW3 1BW", image: "royaloak.jpg", isVisited: false) ,
-        Restaurant(name: "泰咖啡", type: "泰式", location: "7-9 Golders Green Rd、London NW11 8DY", image: "thaicafe.jpg", isVisited: false)
-    ]
+    var restaurants:[Restaurant] = []
     
+    var fetchResultsController:NSFetchedResultsController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +26,64 @@ class RestaurantTableViewController: UITableViewController {
         //启用行高自适应。记得将需要自适应高度的Label的lines设为0哦
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
+        initFetchDataFromCoreData()
     }
-
+    
+    func initFetchDataFromCoreData() -> Void {
+        let request = NSFetchRequest(entityName: "Restaurant")
+        request.sortDescriptors = [NSSortDescriptor(key:"name",ascending: true)]
+        let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+        //CoreData 查询控制器
+        fetchResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: buffer!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchResultsController.delegate = self
+        do{
+            try fetchResultsController.performFetch()
+            restaurants = fetchResultsController.fetchedObjects as! [Restaurant]
+        }catch {
+            NSLog("\(error)")
+            
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    
+    // MARK: - NSFetchedResultsControllerDelegate
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        // 1.更新表格（视图）
+        switch type {
+        case .Insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+            }
+        case .Delete:
+            if let indexPath = indexPath{
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        case .Update:
+            if let indexPath = indexPath{
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        default:
+            tableView.reloadData()
+        }
+        //2. 更新数据
+        restaurants = controller.fetchedObjects as! [Restaurant]
+    }
+
+   
     // MARK: - Table view data source
 
 //    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -69,17 +100,17 @@ class RestaurantTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("RestaurantCell", forIndexPath: indexPath) as!RestaurantTableViewCell
         let index = indexPath.row
         cell.name.text = restaurants[index].name
-        cell.picture.image = UIImage(named: restaurants[index].image)
+        cell.picture.image = UIImage(data: restaurants[index].image!)
         cell.location.text = restaurants[index].location
         cell.type.text = restaurants[index].type
         
         //设置图片圆角.(设为图片框一半的时候就是常见的圆形图片，小于图片框一半的时候就是圆角矩形。)
-        cell.picture.layer.cornerRadius = cell.picture.frame.size.width/2
+        cell.picture.layer.cornerRadius = cell.picture.frame.size.width / 2
         cell.picture.clipsToBounds = true
 //        cell.textLabel?.text = restaurants[indexPath.row]
 //        cell.imageView?.image = UIImage(named: restaurantPictures[indexPath.row])
         
-        cell.favImageView.hidden = !restaurants[index].isVisited
+        cell.favImageView.hidden = !restaurants[index].isVisited.boolValue
         
 //        cell.accessoryType = alreadyComeRestaurantsSet.contains(restaurants[index]) ? .Checkmark:.None
         
@@ -163,11 +194,13 @@ class RestaurantTableViewController: UITableViewController {
     
     //一旦重写实现这个方法，系统将不会提供默认的左滑删除的功能
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        
-        let restaurant = restaurants[indexPath.row]
+//        let rowIndex = indexPath.row
+        //let restaurant = restaurants[indexPath.row]
+        let buffer = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let restaurant = self.fetchResultsController.objectAtIndexPath(indexPath) as! Restaurant
         
         let shareRowAction = UITableViewRowAction(style: .Default, title: "分享"){
-            (rowAction,indexPath) -> Void in
+            [unowned self] (rowAction,indexPath) -> Void in
             let shareAlert = UIAlertController(title: "分享菜单", message: "分享到", preferredStyle: .ActionSheet)
             let sinaWeiBoAlertAction = UIAlertAction(title: "新浪微博", style: .Default,handler: nil)
             let weChatAlertAction = UIAlertAction(title: "微信", style: .Default, handler: nil)
@@ -183,26 +216,40 @@ class RestaurantTableViewController: UITableViewController {
         shareRowAction.backgroundColor = UIColor(red: 0, green: 171/255, blue: 97/255, alpha: 1)
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "删除"){
-            [unowned self] (rowAction,indexPath) -> Void in
-            let rowIndex = indexPath.row
-            self.restaurants.removeAtIndex(rowIndex)
+            (rowAction,indexPath) -> Void in
+            
+            buffer.deleteObject(restaurant)
+            
+            do{
+                try buffer.save()
+            }catch{
+                NSLog("\(error)")
+            }
+            
+            //self.restaurants.removeAtIndex(rowIndex)
             //刷新数据：会刷新全部。下面的deleteRowsAtIndexPaths 能带删除动画
             //            tableView.reloadData()
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
         
-        let visitAction = UITableViewRowAction(style: .Default, title: restaurant.isVisited ? "没来过":"来过"){
-            [unowned self] (action:UITableViewRowAction,indexPath:NSIndexPath) -> Void in
-            self.restaurants[indexPath.row].isVisited = !(self.restaurants[indexPath.row].isVisited)
-            //刷新数据
-            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        let visitAction = UITableViewRowAction(style: .Default, title: restaurant.isVisited.boolValue ? "没来过":"来过"){
+            (action:UITableViewRowAction,indexPath:NSIndexPath) -> Void in
+            restaurant.isVisited = !restaurant.isVisited.boolValue
+            do{
+                try buffer.save()
+            }catch{
+                NSLog("\(error)")
+            }
+//            self.restaurants[indexPath.row].isVisited = !(self.restaurants[indexPath.row].isVisited.boolValue)
+//            //刷新数据
+//            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
         visitAction.backgroundColor = UIColor.brownColor()
 //        var actions = [UITableViewRowAction]()
 //        actions.append(shareRowAction)
 //        return actions
-        return [visitAction,shareRowAction,deleteAction] //这个相当于创建一个新数组，数组包含一个默认元素
+        return [visitAction,shareRowAction,deleteAction] //这个相当于创建一个新数组
     }
  
 
@@ -239,7 +286,7 @@ class RestaurantTableViewController: UITableViewController {
     }
     
     @IBAction func unwindToHomeScreen(segue:UIStoryboardSegue){
-        if segue.identifier == "addRestaurant" {
+        if segue.identifier == "unwindToHomeList" {
             
         }
     }
