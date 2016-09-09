@@ -9,11 +9,15 @@
 import UIKit
 import CoreData
 
-class RestaurantTableViewController: UITableViewController,NSFetchedResultsControllerDelegate {
+class RestaurantTableViewController: UITableViewController,NSFetchedResultsControllerDelegate,UISearchResultsUpdating {
     
     var restaurants:[Restaurant] = []
+    //搜索结果
+    var searchResults:[Restaurant] = []
     
+    //CoreData 查询控制器
     var fetchResultsController:NSFetchedResultsController!
+    var searchController:UISearchController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +30,25 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
         //启用行高自适应。记得将需要自适应高度的Label的lines设为0哦
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
+        //设置SearchBar
+        setupSearchBar()
+        //从CoreData从获取数据
         initFetchDataFromCoreData()
+    }
+    
+    func setupSearchBar() -> Void {
+        //初始化SearchController，如果参数为nil则搜索结果显示在自身所在视图中。在本例显示在tableView中
+        searchController = UISearchController(searchResultsController: nil)
+        let searchBar = searchController.searchBar
+        searchBar.placeholder = "请输入餐馆名或地点搜索..."
+        searchBar.searchBarStyle = .Minimal
+//        searchBar.tintColor = UIColor.whiteColor()
+//        searchBar.barTintColor = UIColor.orangeColor()
+        tableView.tableHeaderView = searchBar
+        //设置搜索更新器
+        searchController.searchResultsUpdater = self
+        //设置搜索时背景是否变暗
+        searchController.dimsBackgroundDuringPresentation = false
     }
     
     func initFetchDataFromCoreData() -> Void {
@@ -48,6 +70,22 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - UISearchResultsUpdating
+    
+    // Called when the search bar's text or scope has changed or when the search bar becomes first responder.
+    @available(iOS 8.0, *)
+    func updateSearchResultsForSearchController(searchController: UISearchController){
+        if var textToSearch =  searchController.searchBar.text{
+            //去除用户输入中的空格
+            textToSearch = textToSearch.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            searchResults = restaurants.filter(){
+                (restaurant) -> Bool in
+                return restaurant.name.containsString(textToSearch)||restaurant.location.containsString(textToSearch)
+            }
+            tableView.reloadData()
+        }
     }
 
     
@@ -92,6 +130,9 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if searchController.active {
+            return searchResults.count
+        }
         return restaurants.count
     }
 
@@ -99,10 +140,12 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RestaurantCell", forIndexPath: indexPath) as!RestaurantTableViewCell
         let index = indexPath.row
-        cell.name.text = restaurants[index].name
-        cell.picture.image = UIImage(data: restaurants[index].image!)
-        cell.location.text = restaurants[index].location
-        cell.type.text = restaurants[index].type
+        //Row显示的数据来源：搜索框在使用时就显示搜索结果，否则显示从CoreData读取出来的数据
+        let restaurant = searchController.active ? searchResults[index] : restaurants[index]
+        cell.name.text = restaurant.name
+        cell.picture.image = UIImage(data: restaurant.image!)
+        cell.location.text = restaurant.location
+        cell.type.text = restaurant.type
         
         //设置图片圆角.(设为图片框一半的时候就是常见的圆形图片，小于图片框一半的时候就是圆角矩形。)
         cell.picture.layer.cornerRadius = cell.picture.frame.size.width / 2
@@ -110,7 +153,7 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //        cell.textLabel?.text = restaurants[indexPath.row]
 //        cell.imageView?.image = UIImage(named: restaurantPictures[indexPath.row])
         
-        cell.favImageView.hidden = !restaurants[index].isVisited.boolValue
+        cell.favImageView.hidden = !restaurant.isVisited.boolValue
         
 //        cell.accessoryType = alreadyComeRestaurantsSet.contains(restaurants[index]) ? .Checkmark:.None
         
@@ -169,13 +212,13 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //    }
     
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        return !searchController.active //搜索时显示的结果不可编辑
     }
-    */
+    
 
     
     // Override to support editing the table view.
@@ -281,7 +324,9 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //        }
         if segue.identifier == "showRestaurantDetail" {
             let destVC = segue.destinationViewController as! RestaurantDetailTableViewController
-            destVC.restaurant = restaurants[(tableView.indexPathForSelectedRow?.row)!]
+            let row = tableView.indexPathForSelectedRow?.row
+            //从搜索栏点击时也要特殊
+            destVC.restaurant = searchController.active ? searchResults[row!] : restaurants[row!]
         }
     }
     
