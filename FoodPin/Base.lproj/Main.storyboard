@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8IK-i2-Tyf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vti-pP-E4C">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -105,7 +105,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gBz-mf-zbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="B2M-ae-Srq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1103" y="674"/>
+            <point key="canvasLocation" x="1915" y="674"/>
         </scene>
         <!--Restaurant Evaluate View Controller-->
         <scene sceneID="PkH-we-7JL">
@@ -227,7 +227,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F9K-ad-In3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Yfk-zb-jcg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2542" y="386"/>
+            <point key="canvasLocation" x="3381" y="344"/>
         </scene>
         <!--Restaurant Detail View Controller-->
         <scene sceneID="asV-za-O66">
@@ -259,12 +259,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjb-K3-fCZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1808" y="111"/>
+            <point key="canvasLocation" x="2904" y="-819"/>
         </scene>
         <!--Restaurant Detail Table View Controller-->
         <scene sceneID="H6l-CG-2pG">
             <objects>
-                <tableViewController id="olo-dk-BVI" customClass="RestaurantDetailTableViewController" customModule="FoodPin" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="olo-dk-BVI" customClass="RestaurantDetailTableViewController" customModule="FoodPin" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="VHn-6h-fDb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -391,7 +391,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="263-5p-SKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1814" y="807"/>
+            <point key="canvasLocation" x="2719" y="344"/>
         </scene>
         <!--新店-->
         <scene sceneID="Ihe-EO-Knp">
@@ -564,12 +564,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5u3-R6-LHk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1814" y="1486"/>
+            <point key="canvasLocation" x="3421" y="-324"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="qub-Iv-Zh1">
             <objects>
-                <viewController id="NTA-EW-vMh" customClass="MapViewController" customModule="FoodPin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="NTA-EW-vMh" customClass="MapViewController" customModule="FoodPin" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NWp-Sr-q5l"/>
                         <viewControllerLayoutGuide type="bottom" id="qXh-u6-lQN"/>
@@ -579,7 +579,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ofn-yI-MEZ">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -596,12 +596,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCW-Bt-ECh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3354" y="1059"/>
+            <point key="canvasLocation" x="3321" y="1113"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--收藏-->
         <scene sceneID="f7s-qs-swV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBarsOnSwipe="YES" id="8IK-i2-Tyf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="收藏" image="favorite" id="uNY-X3-kBL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aD4-M5-YuB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -614,7 +615,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K1y-Xq-Ykf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="300" y="674"/>
+            <point key="canvasLocation" x="1112" y="674"/>
         </scene>
         <!--Guider Page View Controller-->
         <scene sceneID="noP-qn-bd4">
@@ -622,7 +623,7 @@
                 <pageViewController storyboardIdentifier="GuiderPageController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="J3e-RL-7OW" customClass="GuiderPageViewController" customModule="FoodPin" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nhp-78-dZ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="394" y="2202"/>
+            <point key="canvasLocation" x="314" y="2576"/>
         </scene>
         <!--Guider Content View Controller-->
         <scene sceneID="Q1d-8R-OdW">
@@ -692,7 +693,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oot-rC-wRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1029" y="2202"/>
+            <point key="canvasLocation" x="949" y="2576"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1XF-Xm-nwO">
@@ -710,12 +711,52 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ojq-R6-JvU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1103" y="1476"/>
+            <point key="canvasLocation" x="2719" y="-324"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="VlG-C8-367">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vti-pP-E4C" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="RhS-sz-B5b">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="8IK-i2-Tyf" kind="relationship" relationship="viewControllers" id="A5a-3C-9oO"/>
+                        <segue destination="4KQ-i9-OOv" kind="relationship" relationship="viewControllers" id="YJr-OW-5aD"/>
+                        <segue destination="94C-pW-Wvq" kind="relationship" relationship="viewControllers" id="MIo-85-irJ"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EEP-Vm-u6N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="300" y="674"/>
+        </scene>
+        <!--About-->
+        <scene sceneID="hvT-S9-39R">
+            <objects>
+                <viewControllerPlaceholder storyboardName="About" id="94C-pW-Wvq" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="1vb-JF-hpa"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sYU-v2-2Gp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1112" y="1437"/>
+        </scene>
+        <!--Discover-->
+        <scene sceneID="3oB-41-jHd">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Discover" id="4KQ-i9-OOv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="7pN-sB-dD6"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TkC-TB-qG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1112" y="25"/>
         </scene>
     </scenes>
     <resources>
         <image name="close" width="84" height="84"/>
         <image name="dislike" width="84" height="84"/>
+        <image name="favorite" width="25" height="25"/>
         <image name="good" width="256" height="256"/>
         <image name="great" width="256" height="256"/>
         <image name="heart" width="64" height="64"/>

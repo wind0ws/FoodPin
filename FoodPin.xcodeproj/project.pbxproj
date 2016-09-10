@@ -26,6 +26,8 @@
 		42F1D3F11D7AA33A0067B569 /* Restaurant1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1D3F01D7AA33A0067B569 /* Restaurant1.swift */; };
 		42F1D3F41D7AD1F50067B569 /* RestaurantDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1D3F31D7AD1F50067B569 /* RestaurantDetailTableViewController.swift */; };
 		42F1D3F61D7AD8280067B569 /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1D3F51D7AD8280067B569 /* RestaurantDetailTableViewCell.swift */; };
+		42FFFACA1D8447F000FE5919 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42FFFAC91D8447F000FE5919 /* About.storyboard */; };
+		42FFFACD1D84485500FE5919 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42FFFACB1D84485500FE5919 /* Discover.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		42F1D3F21D7AA5D20067B569 /* TransformRestaurant.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TransformRestaurant.playground; sourceTree = "<group>"; };
 		42F1D3F31D7AD1F50067B569 /* RestaurantDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewController.swift; sourceTree = "<group>"; };
 		42F1D3F51D7AD8280067B569 /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
+		42FFFAC91D8447F000FE5919 /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = About.storyboard; sourceTree = "<group>"; };
+		42FFFACC1D84485500FE5919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Discover.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 			children = (
 				42EC91221D78109800D72960 /* AppDelegate.swift */,
 				42EC91261D78109800D72960 /* Main.storyboard */,
+				42FFFACB1D84485500FE5919 /* Discover.storyboard */,
+				42FFFAC91D8447F000FE5919 /* About.storyboard */,
 				42EC91291D78109800D72960 /* Assets.xcassets */,
 				42EC912B1D78109800D72960 /* LaunchScreen.storyboard */,
 				42EC912E1D78109800D72960 /* Info.plist */,
@@ -174,6 +180,8 @@
 			files = (
 				42EC912D1D78109800D72960 /* LaunchScreen.storyboard in Resources */,
 				42EC912A1D78109800D72960 /* Assets.xcassets in Resources */,
+				42FFFACD1D84485500FE5919 /* Discover.storyboard in Resources */,
+				42FFFACA1D8447F000FE5919 /* About.storyboard in Resources */,
 				42EC91281D78109800D72960 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +228,14 @@
 				42EC912C1D78109800D72960 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		42FFFACB1D84485500FE5919 /* Discover.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42FFFACC1D84485500FE5919 /* Base */,
+			);
+			name = Discover.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

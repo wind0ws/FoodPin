@@ -69,9 +69,11 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        //为什么下面展示引导页的代码不能放到viewDidLoad里面呢：
+        //因为viewDidLoad时，界面还未显示出来，如果在这里弹模态视图出来，iOS会警告的：不鼓励从detachedView中弹出展示新视图
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.boolForKey("isGuiderShowed"){
-            print("引导页已经显示过啦")
+//            print("引导页已经显示过啦")
             return
         }
         if let guiderContentViewController = storyboard?.instantiateViewControllerWithIdentifier("GuiderPageController") as? GuiderPageViewController{

@@ -17,6 +17,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        customNavigationBar()
+        customTabBar()
+        return true
+    }
+    
+    func customTabBar() -> Void {
+        //前景色
+        UITabBar.appearance().tintColor = UIColor.whiteColor()
+//        UITabBar.appearance().tintColor = UIColor(red: 242/255, green: 116/255, blue: 119/255, alpha: 1)
+        //背景色
+//        UITabBar.appearance().barTintColor = UIColor.blackColor()
+        //设置背景图片
+//        UITabBar.appearance().backgroundImage = UIImage(named:"xxx")
+        //设置tab选中背景
+        UITabBar.appearance().selectionIndicatorImage = UIImage(named: "tabitem-selected")
+    }
+    
+    func customNavigationBar() -> Void{
         UINavigationBar.appearance().barTintColor = UIColor(red: 242/255, green: 116/255, blue: 119/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
@@ -25,11 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 [NSForegroundColorAttributeName:UIColor.whiteColor(),
                  NSFontAttributeName:barFont]
         }
-//        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-//        UINavigationBar.appearance().backgroundColor = UIColor.cyanColor()
-//        UIApplication.sharedApplication().statusBarStyle = .LightContent
-        return true
+        //        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        //        UINavigationBar.appearance().backgroundColor = UIColor.cyanColor()
+        //        UIApplication.sharedApplication().statusBarStyle = .LightContent
+
     }
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

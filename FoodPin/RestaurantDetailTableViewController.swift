@@ -140,9 +140,12 @@ class RestaurantDetailTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "evaluateRestaurant" {
             let vc = segue.destinationViewController as! RestaurantEvaluateViewController
+            //同在Storyboard上勾选 hideBottomBar on push 效果一样
+//            vc.hidesBottomBarWhenPushed = true
             vc.restaurant = restaurant
         }else if segue.identifier == "showMap" {
             let vc = segue.destinationViewController as! MapViewController
+//            vc.hidesBottomBarWhenPushed = true
             vc.restaurant = restaurant
         }
         
