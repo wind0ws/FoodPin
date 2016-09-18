@@ -15,7 +15,7 @@ class WebViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.baidu.com/" )!))
+        webView.loadRequest(URLRequest(url: URL(string: "https://www.baidu.com/" )!))
     }
 
     override func didReceiveMemoryWarning() {

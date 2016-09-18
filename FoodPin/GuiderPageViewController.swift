@@ -20,7 +20,7 @@ class GuiderPageViewController: UIPageViewController,UIPageViewControllerDataSou
         // Do any additional setup after loading the view.
         dataSource = self // TableViewController 默认就设置dataSource为自身，但是PageViewController需要自己设定
         if let startVC = guiderPageViewControllerAtIndex(0){
-            setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
+            setViewControllers([startVC], direction: .forward, animated: true, completion: nil)
         }
         
     }
@@ -33,14 +33,14 @@ class GuiderPageViewController: UIPageViewController,UIPageViewControllerDataSou
     // MARK - UIPageViewControllerDataSource
     
     @available(iOS 5.0, *)
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?{
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?{
         var index  = (viewController as! GuiderContentViewController).index
         index -= 1
         return guiderPageViewControllerAtIndex(index)
     }
     
     @available(iOS 5.0, *)
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?{
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?{
         var index  = (viewController as! GuiderContentViewController).index
         index += 1
         return guiderPageViewControllerAtIndex(index)
@@ -64,11 +64,11 @@ class GuiderPageViewController: UIPageViewController,UIPageViewControllerDataSou
      
      */
     
-    func guiderPageViewControllerAtIndex(index:Int) -> UIViewController? {
+    func guiderPageViewControllerAtIndex(_ index:Int) -> UIViewController? {
         // if case 模式 ＝ 变量    //模式在前，变量在后
         if case 0..<headers.count = index {
             // GuiderContentController 这个字符串是在storyboard中设置的
-            if let guiderContentVC =  storyboard?.instantiateViewControllerWithIdentifier("GuiderContentController") as? GuiderContentViewController{
+            if let guiderContentVC =  storyboard?.instantiateViewController(withIdentifier: "GuiderContentController") as? GuiderContentViewController{
                 guiderContentVC.imageName = images[index]
                 guiderContentVC.header = headers[index]
                 guiderContentVC.footer = headers[index]

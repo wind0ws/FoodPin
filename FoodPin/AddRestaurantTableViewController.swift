@@ -40,29 +40,29 @@ class AddRestaurantTableViewController: UITableViewController,UIImagePickerContr
     
     func setImageViewConstraint() -> Void {
         //MARK 手动设置约束
-        let leftConstraint = NSLayoutConstraint(item: imageView, attribute: .Leading, relatedBy: .Equal, toItem: imageView.superview, attribute: .Leading, multiplier: 1, constant: 0)
-        let rightConstraint = NSLayoutConstraint(item: imageView, attribute: .Trailing, relatedBy: .Equal, toItem: imageView.superview, attribute: .Trailing, multiplier: 1, constant: 0)
-        let topConstraint = NSLayoutConstraint(item: imageView, attribute: .Top, relatedBy: .Equal, toItem: imageView.superview, attribute: .Top, multiplier: 1, constant: 0)
-        let bottomConstraint = NSLayoutConstraint(item: imageView, attribute: .Bottom, relatedBy: .Equal, toItem: imageView.superview, attribute: .Bottom, multiplier: 1, constant: 0)
+        let leftConstraint = NSLayoutConstraint(item: imageView, attribute: .leading, relatedBy: .equal, toItem: imageView.superview, attribute: .leading, multiplier: 1, constant: 0)
+        let rightConstraint = NSLayoutConstraint(item: imageView, attribute: .trailing, relatedBy: .equal, toItem: imageView.superview, attribute: .trailing, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: imageView.superview, attribute: .top, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: imageView, attribute: .bottom, relatedBy: .equal, toItem: imageView.superview, attribute: .bottom, multiplier: 1, constant: 0)
         
         //使 Constraint 生效
-        leftConstraint.active = true
-        rightConstraint.active = true
-        topConstraint.active = true
-        bottomConstraint.active = true
+        leftConstraint.isActive = true
+        rightConstraint.isActive = true
+        topConstraint.isActive = true
+        bottomConstraint.isActive = true
     }
     
-    @IBAction func saveBtnTapped(sender: AnyObject) {
+    @IBAction func saveBtnTapped(_ sender: AnyObject) {
         //获取管理托管对象缓冲区上下文.
-        let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
-        restaurant = NSEntityDescription.insertNewObjectForEntityForName("Restaurant", inManagedObjectContext: buffer!) as? Restaurant
+        let buffer = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext
+        restaurant = NSEntityDescription.insertNewObject(forEntityName: "Restaurant", into: buffer!) as? Restaurant
         restaurant?.name = restaurantName.text!
         restaurant?.type = restaurantType.text!
         restaurant?.location = restaurantAddress.text!
         if let image = imageView.image{
             restaurant?.image = UIImagePNGRepresentation(image)
         }
-        restaurant?.isVisited = isVisitedSwitch.on //NSNumber 类型与数字和布尔类型自动转换。
+        restaurant?.isVisited = isVisitedSwitch.isOn as NSNumber //NSNumber 类型与数字和布尔类型自动转换。
         do{
             try buffer?.save()
         }catch {
@@ -124,7 +124,7 @@ class AddRestaurantTableViewController: UITableViewController,UIImagePickerContr
  
         */
         
-        performSegueWithIdentifier("unwindToHomeList", sender: sender)
+        performSegue(withIdentifier: "unwindToHomeList", sender: sender)
         
     }
     
@@ -143,32 +143,32 @@ class AddRestaurantTableViewController: UITableViewController,UIImagePickerContr
 //    }
     
     //TableView选中方法
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
-            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) { //判断是否有权限访问照片
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).row == 0 {
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) { //判断是否有权限访问照片
                 let imagePicker = UIImagePickerController() //OK，有权限，初始化选择照片控制器
                 imagePicker.allowsEditing = false
-                imagePicker.sourceType = .PhotoLibrary
+                imagePicker.sourceType = .photoLibrary
                 imagePicker.delegate = self
                 //模态弹出
-                self.presentViewController(imagePicker, animated: true){
+                self.present(imagePicker, animated: true){
                     () -> Void in
                     print("打开了选择照片ViewController")
                 }
             }
         }
         //取消选中
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        imageView.contentMode = .ScaleAspectFill //平铺
+        imageView.contentMode = .scaleAspectFill //平铺
         //裁边  超出部分的图片裁掉  通常与Aspect这种模式搭配
         imageView.clipsToBounds = true
         
         //让相册选择视图退场
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
 
     }
     

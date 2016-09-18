@@ -21,29 +21,29 @@ class RestaurantEvaluateViewController: UIViewController {
         super.viewDidLoad()
         
         //设置背景虚化
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurEffectView.frame = view.frame
         
         //加载图片
         imageView.addSubview(blurEffectView)
-        imageView.image = UIImage(data: restaurant.image!)
+        imageView.image = UIImage(data: restaurant.image! as Data)
         
         //设置评价StackView变形属性
-        let scale = CGAffineTransformMakeScale(0, 0)
-        let translation = CGAffineTransformMakeTranslation(0, 500)
+        let scale = CGAffineTransform(scaleX: 0, y: 0)
+        let translation = CGAffineTransform(translationX: 0, y: 500)
 //        evaluateStackView.transform = translation //scale
-        evaluateStackView.transform = CGAffineTransformConcat(scale, translation)
+        evaluateStackView.transform = scale.concatenating(translation)
         //设置成上面这样，实际上就是看不到了，缩放成0了
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         //当视图加载完毕后，播放动画
-        UIView.animateWithDuration(0.5){
+        UIView.animate(withDuration: 0.5, animations: {
             () -> Void in
-            self.evaluateStackView.transform = CGAffineTransformIdentity //缩放到原尺寸
-        }
+            self.evaluateStackView.transform = CGAffineTransform.identity //缩放到原尺寸
+        })
         
         // 摆动动画
 //        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
@@ -58,7 +58,7 @@ class RestaurantEvaluateViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func evaluateBtnTapped(sender: UIButton) {
+    @IBAction func evaluateBtnTapped(_ sender: UIButton) {
         let tag = sender.tag
         switch tag {
         case 100:
@@ -70,7 +70,7 @@ class RestaurantEvaluateViewController: UIViewController {
         default:
             break
         }
-        performSegueWithIdentifier("unwindToDetailView", sender: sender)
+        performSegue(withIdentifier: "unwindToDetailView", sender: sender)
     }
     
     

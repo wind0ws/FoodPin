@@ -13,7 +13,7 @@ class RestaurantDetailTableViewController: UITableViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var evaluateButton: UIButton!
     
-    func getDetailItemValues(restaurant:Restaurant) -> [(String,String)] {
+    func getDetailItemValues(_ restaurant:Restaurant) -> [(String,String)] {
         var result = [(String,String)]()
         result.append(("餐馆名:",restaurant.name))
         result.append(("餐馆类型:",restaurant.type))
@@ -29,7 +29,7 @@ class RestaurantDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         restaurantItems = getDetailItemValues(restaurant)
-        imageView.image = UIImage(data: restaurant.image!)
+        imageView.image = UIImage(data: restaurant.image! as Data)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -45,9 +45,9 @@ class RestaurantDetailTableViewController: UITableViewController {
         //3.对Cell中的控件进行约束，要确保设置了顶距和底距为0
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if let evaluate = restaurant.evaluate{
-            evaluateButton.setImage(UIImage(named: evaluate), forState: .Normal)
+            evaluateButton.setImage(UIImage(named: evaluate), for: UIControlState())
         }
     }
     
@@ -69,15 +69,15 @@ class RestaurantDetailTableViewController: UITableViewController {
     //        return 1 //总共有几块 Section，本例就一种类型
     //    }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return restaurantItems.count
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let index = indexPath.row
-        let cell = tableView.dequeueReusableCellWithIdentifier("DetailCell", forIndexPath: indexPath) as! RestaurantDetailTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let index = (indexPath as NSIndexPath).row
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! RestaurantDetailTableViewCell
         let item = restaurantItems[index]
         cell.itemName.text = item.0
         cell.itemValue.text = item.1
@@ -135,32 +135,32 @@ class RestaurantDetailTableViewController: UITableViewController {
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "evaluateRestaurant" {
-            let vc = segue.destinationViewController as! RestaurantEvaluateViewController
+            let vc = segue.destination as! RestaurantEvaluateViewController
             //同在Storyboard上勾选 hideBottomBar on push 效果一样
 //            vc.hidesBottomBarWhenPushed = true
             vc.restaurant = restaurant
         }else if segue.identifier == "showMap" {
-            let vc = segue.destinationViewController as! MapViewController
+            let vc = segue.destination as! MapViewController
 //            vc.hidesBottomBarWhenPushed = true
             vc.restaurant = restaurant
         }
         
     }
     
-    @IBAction func closeSegue(segue:UIStoryboardSegue){
+    @IBAction func closeSegue(_ segue:UIStoryboardSegue){
         //反向转场 unwind 传值
         if segue.identifier == "unwindToDetailView" {
-            let sourceVC = segue.sourceViewController as! RestaurantEvaluateViewController
+            let sourceVC = segue.source as! RestaurantEvaluateViewController
             if let evaluate = sourceVC.evaluate {
                 NSLog("你的评价是：\(evaluate)")
                 self.restaurant.evaluate = evaluate
-                self.evaluateButton.setImage(UIImage(named: evaluate), forState: .Normal)
+                self.evaluateButton.setImage(UIImage(named: evaluate), for: UIControlState())
                 //保存评价
-                let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+                let buffer = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext
                 do{
                     try buffer?.save()
                 }catch{

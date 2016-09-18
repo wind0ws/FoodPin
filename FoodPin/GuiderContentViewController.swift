@@ -30,7 +30,7 @@ class GuiderContentViewController: UIViewController {
         labelFooter.text = footer
         imageView.image = UIImage(named: imageName)
         pageControl.currentPage = index
-        doneBtn.hidden = index != 2
+        doneBtn.isHidden = index != 2
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,10 +38,10 @@ class GuiderContentViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func doneBtnTapped(sender: AnyObject) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: "isGuiderShowed")
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func doneBtnTapped(_ sender: AnyObject) {
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "isGuiderShowed")
+        dismiss(animated: true, completion: nil)
     }
 
     /*

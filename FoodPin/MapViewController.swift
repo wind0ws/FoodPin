@@ -53,21 +53,21 @@ class MapViewController: UIViewController,MKMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?{
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
         let id = "我的图钉"
         if annotation is MKUserLocation{
             //用户位置视图也是一个标注视图。排除对其的控制
             return nil
         }
-        var annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier(id) as? MKPinAnnotationView
+        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: id) as? MKPinAnnotationView
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: id)
             annotationView?.canShowCallout = true
         }
-        let leftIconView = UIImageView(frame: CGRectMake(0, 0, 53, 53))
-        leftIconView.image = UIImage(data: restaurant.image!)
+        let leftIconView = UIImageView(frame: CGRect(x: 0, y: 0, width: 53, height: 53))
+        leftIconView.image = UIImage(data: restaurant.image! as Data)
         annotationView?.leftCalloutAccessoryView = leftIconView
-        annotationView?.pinTintColor = UIColor.greenColor()
+        annotationView?.pinTintColor = UIColor.green
         return annotationView
     }
     

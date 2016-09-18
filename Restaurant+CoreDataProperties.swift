@@ -21,6 +21,6 @@ extension Restaurant {
     @NSManaged var location: String
     @NSManaged var evaluate: String?
     @NSManaged var isVisited: NSNumber //CoreData无布尔类型，所以Entity模型中设置的布尔在这用NSNumber替代。0false，1true（C语言就是这样设置，0false，非0 true）
-    @NSManaged var image: NSData? //二进制数据
+    @NSManaged var image: Data? //二进制数据
 
 }

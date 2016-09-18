@@ -16,7 +16,7 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     var searchResults:[Restaurant] = []
     
     //CoreData 查询控制器
-    var fetchResultsController:NSFetchedResultsController!
+    var fetchResultsController:NSFetchedResultsController<Restaurant>!
     var searchController:UISearchController!
     
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
         searchController = UISearchController(searchResultsController: nil)
         let searchBar = searchController.searchBar
         searchBar.placeholder = "请输入餐馆名或地点搜索..."
-        searchBar.searchBarStyle = .Minimal
+        searchBar.searchBarStyle = .minimal
 //        searchBar.tintColor = UIColor.whiteColor()
 //        searchBar.barTintColor = UIColor.orangeColor()
         tableView.tableHeaderView = searchBar
@@ -52,33 +52,34 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     }
     
     func initFetchDataFromCoreData() -> Void {
-        let request = NSFetchRequest(entityName: "Restaurant")
+    
+        let request = NSFetchRequest<Restaurant>(entityName: "Restaurant")
         request.sortDescriptors = [NSSortDescriptor(key:"name",ascending: true)]
-        let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+        let buffer = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext
         //CoreData 查询控制器
         fetchResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: buffer!, sectionNameKeyPath: nil, cacheName: nil)
         fetchResultsController.delegate = self
         do{
             try fetchResultsController.performFetch()
-            restaurants = fetchResultsController.fetchedObjects as! [Restaurant]
+            restaurants = fetchResultsController.fetchedObjects!
         }catch {
             NSLog("\(error)")
             
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //为什么下面展示引导页的代码不能放到viewDidLoad里面呢：
         //因为viewDidLoad时，界面还未显示出来，如果在这里弹模态视图出来，iOS会警告的：不鼓励从detachedView中弹出展示新视图
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.boolForKey("isGuiderShowed"){
+        let defaults = UserDefaults.standard
+        if defaults.bool(forKey: "isGuiderShowed"){
 //            print("引导页已经显示过啦")
             return
         }
-        if let guiderContentViewController = storyboard?.instantiateViewControllerWithIdentifier("GuiderPageController") as? GuiderPageViewController{
+        if let guiderContentViewController = storyboard?.instantiateViewController(withIdentifier: "GuiderPageController") as? GuiderPageViewController{
             //模态展示引导页。  
-            self.presentViewController(guiderContentViewController, animated: true, completion: nil)
+            self.present(guiderContentViewController, animated: true, completion: nil)
         }
     }
     
@@ -91,13 +92,13 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     
     // Called when the search bar's text or scope has changed or when the search bar becomes first responder.
     @available(iOS 8.0, *)
-    func updateSearchResultsForSearchController(searchController: UISearchController){
+    func updateSearchResults(for searchController: UISearchController){
         if var textToSearch =  searchController.searchBar.text{
             //去除用户输入中的空格
-            textToSearch = textToSearch.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            textToSearch = textToSearch.trimmingCharacters(in: CharacterSet.whitespaces)
             searchResults = restaurants.filter(){
                 (restaurant) -> Bool in
-                return restaurant.name.containsString(textToSearch)||restaurant.location.containsString(textToSearch)
+                return restaurant.name.contains(textToSearch)||restaurant.location.contains(textToSearch)
             }
             tableView.reloadData()
         }
@@ -106,28 +107,28 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     
     // MARK: - NSFetchedResultsControllerDelegate
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         // 1.更新表格（视图）
         switch type {
-        case .Insert:
+        case .insert:
             if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Delete:
+        case .delete:
             if let indexPath = indexPath{
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-        case .Update:
+        case .update:
             if let indexPath = indexPath{
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         default:
             tableView.reloadData()
@@ -143,22 +144,22 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //        return 1 //总共有几块 Section，本例就一种类型
 //    }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if searchController.active {
+        if searchController.isActive {
             return searchResults.count
         }
         return restaurants.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("RestaurantCell", forIndexPath: indexPath) as!RestaurantTableViewCell
-        let index = indexPath.row
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantCell", for: indexPath) as!RestaurantTableViewCell
+        let index = (indexPath as NSIndexPath).row
         //Row显示的数据来源：搜索框在使用时就显示搜索结果，否则显示从CoreData读取出来的数据
-        let restaurant = searchController.active ? searchResults[index] : restaurants[index]
+        let restaurant = searchController.isActive ? searchResults[index] : restaurants[index]
         cell.name.text = restaurant.name
-        cell.picture.image = UIImage(data: restaurant.image!)
+        cell.picture.image = UIImage(data: restaurant.image! as Data)
         cell.location.text = restaurant.location
         cell.type.text = restaurant.type
         
@@ -168,7 +169,7 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //        cell.textLabel?.text = restaurants[indexPath.row]
 //        cell.imageView?.image = UIImage(named: restaurantPictures[indexPath.row])
         
-        cell.favImageView.hidden = !restaurant.isVisited.boolValue
+        cell.favImageView.isHidden = !restaurant.isVisited.boolValue
         
 //        cell.accessoryType = alreadyComeRestaurantsSet.contains(restaurants[index]) ? .Checkmark:.None
         
@@ -229,54 +230,54 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 
     
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return !searchController.active //搜索时显示的结果不可编辑
+        return !searchController.isActive //搜索时显示的结果不可编辑
     }
     
 
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let rowIndex = indexPath.row
-        if editingStyle == .Delete {
-            restaurants.removeAtIndex(rowIndex)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let rowIndex = (indexPath as NSIndexPath).row
+        if editingStyle == .delete {
+            restaurants.remove(at: rowIndex)
             //刷新数据：会刷新全部。下面的deleteRowsAtIndexPaths 能带删除动画
 //            tableView.reloadData()
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
     
     //一旦重写实现这个方法，系统将不会提供默认的左滑删除的功能
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 //        let rowIndex = indexPath.row
         //let restaurant = restaurants[indexPath.row]
-        let buffer = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let restaurant = self.fetchResultsController.objectAtIndexPath(indexPath) as! Restaurant
+        let buffer = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let restaurant = self.fetchResultsController.object(at: indexPath)
         
-        let shareRowAction = UITableViewRowAction(style: .Default, title: "分享"){
+        let shareRowAction = UITableViewRowAction(style: .default, title: "分享"){
             [unowned self] (rowAction,indexPath) -> Void in
-            let shareAlert = UIAlertController(title: "分享菜单", message: "分享到", preferredStyle: .ActionSheet)
-            let sinaWeiBoAlertAction = UIAlertAction(title: "新浪微博", style: .Default,handler: nil)
-            let weChatAlertAction = UIAlertAction(title: "微信", style: .Default, handler: nil)
-            let qqAlertAction = UIAlertAction(title: "QQ", style: .Default, handler: nil)
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            let shareAlert = UIAlertController(title: "分享菜单", message: "分享到", preferredStyle: .actionSheet)
+            let sinaWeiBoAlertAction = UIAlertAction(title: "新浪微博", style: .default,handler: nil)
+            let weChatAlertAction = UIAlertAction(title: "微信", style: .default, handler: nil)
+            let qqAlertAction = UIAlertAction(title: "QQ", style: .default, handler: nil)
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
             shareAlert.addAction(sinaWeiBoAlertAction)
             shareAlert.addAction(weChatAlertAction)
             shareAlert.addAction(qqAlertAction)
             shareAlert.addAction(cancelAction)
-            self.presentViewController(shareAlert, animated: true, completion: nil)
+            self.present(shareAlert, animated: true, completion: nil)
         }
 //        shareRowAction.backgroundColor = UIColor.greenColor()
         shareRowAction.backgroundColor = UIColor(red: 0, green: 171/255, blue: 97/255, alpha: 1)
         
-        let deleteAction = UITableViewRowAction(style: .Default, title: "删除"){
+        let deleteAction = UITableViewRowAction(style: .default, title: "删除"){
             (rowAction,indexPath) -> Void in
             
-            buffer.deleteObject(restaurant)
+            buffer.delete(restaurant)
             
             do{
                 try buffer.save()
@@ -291,9 +292,9 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
             //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
         
-        let visitAction = UITableViewRowAction(style: .Default, title: restaurant.isVisited.boolValue ? "没来过":"来过"){
-            (action:UITableViewRowAction,indexPath:NSIndexPath) -> Void in
-            restaurant.isVisited = !restaurant.isVisited.boolValue
+        let visitAction = UITableViewRowAction(style: .default, title: restaurant.isVisited.boolValue ? "没来过":"来过"){
+            (action:UITableViewRowAction,indexPath:IndexPath) -> Void in
+            restaurant.isVisited = !restaurant.isVisited.boolValue as NSNumber
             do{
                 try buffer.save()
             }catch{
@@ -303,7 +304,7 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //            //刷新数据
 //            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
-        visitAction.backgroundColor = UIColor.brownColor()
+        visitAction.backgroundColor = UIColor.brown
 //        var actions = [UITableViewRowAction]()
 //        actions.append(shareRowAction)
 //        return actions
@@ -330,7 +331,7 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 //        if segue.identifier == "showRestaurantDetail"{
@@ -338,14 +339,14 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
 //            destVC.restaurant = restaurants[(tableView.indexPathForSelectedRow?.row)!]
 //        }
         if segue.identifier == "showRestaurantDetail" {
-            let destVC = segue.destinationViewController as! RestaurantDetailTableViewController
-            let row = tableView.indexPathForSelectedRow?.row
+            let destVC = segue.destination as! RestaurantDetailTableViewController
+            let row = (tableView.indexPathForSelectedRow as NSIndexPath?)?.row
             //从搜索栏点击时也要特殊
-            destVC.restaurant = searchController.active ? searchResults[row!] : restaurants[row!]
+            destVC.restaurant = searchController.isActive ? searchResults[row!] : restaurants[row!]
         }
     }
     
-    @IBAction func unwindToHomeScreen(segue:UIStoryboardSegue){
+    @IBAction func unwindToHomeScreen(_ segue:UIStoryboardSegue){
         if segue.identifier == "unwindToHomeList" {
             
         }
